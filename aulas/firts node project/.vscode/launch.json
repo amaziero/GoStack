@@ -6,12 +6,11 @@
   "configurations": [
     {
       "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${file}"
+      "request": "attach",
+      "protocol": "inspector",
+      "restart": true,
+      "name": "debbuger",
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }
