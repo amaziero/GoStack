@@ -3,6 +3,11 @@
     "browser": true,
     "es6": true
   },
+  "arrow-body-style": [
+    "error",
+    "as-needed",
+    { "requireReturnForObjectLiteral": true }
+  ],
   "extends": ["airbnb-base", "plugin:@typescript-eslint/recommended"],
   "globals": {
     "Atomics": "readonly",
