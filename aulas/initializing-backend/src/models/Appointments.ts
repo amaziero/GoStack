@@ -1,19 +1,16 @@
 // This class is responsable for represent the Appointment content within it
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-import { uuid } from 'uuidv4';
-
+@Entity('appointments')
 class Appointments {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column('varchar')
   provider: string;
 
+  @Column('timestamp with time zone')
   date: Date;
-
-  constructor({ provider, date }: Omit<Appointments, 'id'>) {
-    this.id = uuid();
-    this.provider = provider;
-    this.date = date;
-  }
 }
 
 export default Appointments;
