@@ -3,6 +3,7 @@ import User from '../models/Users';
 import uploadConfig from '../config/upload';
 import path from 'path';
 import fs from 'fs';
+import AppError from '../errors/AppError';
 
 interface Request {
   user_id: string;
@@ -15,7 +16,7 @@ class UpdateUserAvatarService {
     const user = await userRepository.findOne(user_id);
 
     if (!user) {
-      throw new Error('You must login!');
+      throw new AppError('You must login!', 401);
     }
 
     if (user.avatar) {
