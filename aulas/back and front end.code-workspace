@@ -1,11 +1,7 @@
 {
   "folders": [
-	{
-		"path": "03-initializing-backend"
-	},
-	{
-		"path": "05-first-react-project"
-	}
-],
-  "settings": {}
+    {
+      "path": "06-gobarber-web"
+    }
+  ]
 }
