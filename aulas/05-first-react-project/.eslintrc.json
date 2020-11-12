@@ -30,6 +30,7 @@
     ],
     "rules": {
       "camelcase": "off",
+      "react/jsx-one-expression-per-line": "off",
       "prettier/prettier": ["error", {
         "endOfLine":"auto",
         "comma": "never"
