@@ -17,6 +17,7 @@ interface SignUpProps {
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+
   const handleSubmit = useCallback(async (data: SignUpProps) => {
     try {
       formRef.current?.setErrors({});
