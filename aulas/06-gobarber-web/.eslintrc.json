@@ -29,7 +29,7 @@
       "prettier"
   ],
   "rules": {
-    // "no-restricted-globals": "off",
+    "no-unused-expressions": "off",
     "camelcase": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
