@@ -9,6 +9,7 @@ interface AuthState {
 interface AuthContextProps {
   user: string;
   signIn(credentials: SignInProps): Promise<void>;
+  signOut(): void;
 }
 
 interface SignInProps {
@@ -40,11 +41,19 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({ token, user });
   }, []);
 
+  const signOut = useCallback(() => {
+    localStorage.removeItem('@GoBarber:token');
+    localStorage.removeItem('@GoBarber:user');
+
+    setData({} as AuthState);
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
         user: data.user,
         signIn,
+        signOut,
       }}
     >
       {children}
