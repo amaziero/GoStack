@@ -1,10 +1,10 @@
-import User from '@modules/users/infra/typeorm/entities/Users';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import authConfig from '@config/auth';
-
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import IUserRepossitories from '../repositories/IUsersRepositories';
+import User from '@modules/users/infra/typeorm/entities/Users';
 
 interface Request {
   email: string;
@@ -16,8 +16,10 @@ interface Response {
   token: string;
 }
 
+@injectable()
 class AuthenticateUserService {
   constructor(
+    @inject('UsersRepository')
     private usersRepository: IUserRepossitories
   ) {}
 

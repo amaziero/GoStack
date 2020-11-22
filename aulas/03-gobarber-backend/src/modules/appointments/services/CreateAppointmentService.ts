@@ -3,9 +3,12 @@ import Appointment from '../infra/typeorm/entities/Appointments';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepositories';
 import AppError from '@shared/errors/AppError';
 import ICreateAppointmtentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
+import { injectable, inject } from 'tsyringe';
 
+@injectable()
 class CreateAppointmentService {
   constructor(
+    @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository
   ) {}
 

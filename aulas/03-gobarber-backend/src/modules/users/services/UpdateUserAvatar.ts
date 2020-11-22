@@ -4,14 +4,17 @@ import path from 'path';
 import fs from 'fs';
 import AppError from '@shared/errors/AppError';
 import IUserRepossitories from '../repositories/IUsersRepositories';
+import { inject, injectable } from 'tsyringe';
 
 interface Request {
   user_id: string;
   avatarFileName: string;
 }
 
+@injectable()
 class UpdateUserAvatarService {
   constructor(
+    @inject('UsersRepositories')
     private usersRepository: IUserRepossitories
   ) {}
 

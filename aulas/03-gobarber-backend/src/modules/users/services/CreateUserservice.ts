@@ -1,6 +1,7 @@
 import User from '@modules/users/infra/typeorm/entities/Users';
 import { hash } from 'bcryptjs';
 import AppError from '@shared/errors/AppError';
+import { inject, injectable } from 'tsyringe';
 import IUserRepossitories from '../repositories/IUsersRepositories';
 
 interface RequestUser {
@@ -9,8 +10,10 @@ interface RequestUser {
   password?: string;
 }
 
+@injectable()
 class CreateUserService {
   constructor(
+    @inject('UsersRepositories')
     private usersRepository: IUserRepossitories
   ) {}
 
