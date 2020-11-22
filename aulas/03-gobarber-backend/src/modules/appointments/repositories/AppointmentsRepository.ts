@@ -2,7 +2,7 @@
 // interact with the object itself on the data base, all thigs like:
 // create, list, delete and change an Appointment, will have most of it's logic
 // here.
-import Appointment from '../models/Appointments';
+import Appointment from '../infra/typeorm/entities/Appointments';
 import { EntityRepository, Repository } from 'typeorm';
 
 @EntityRepository(Appointment)
