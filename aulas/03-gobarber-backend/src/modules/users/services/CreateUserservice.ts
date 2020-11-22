@@ -13,7 +13,7 @@ interface RequestUser {
 @injectable()
 class CreateUserService {
   constructor(
-    @inject('UsersRepositories')
+    @inject('UsersRepository')
     private usersRepository: IUserRepossitories
   ) {}
 
