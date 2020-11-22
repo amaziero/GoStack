@@ -1,9 +1,9 @@
-import { getRepository } from 'typeorm';
 import User from '@modules/users/infra/typeorm/entities/Users';
 import uploadConfig from '@config/upload';
 import path from 'path';
 import fs from 'fs';
 import AppError from '@shared/errors/AppError';
+import IUserRepossitories from '../repositories/IUsersRepositories';
 
 interface Request {
   user_id: string;
@@ -11,9 +11,12 @@ interface Request {
 }
 
 class UpdateUserAvatarService {
+  constructor(
+    private usersRepository: IUserRepossitories
+  ) {}
+
   public async execute({ user_id, avatarFileName }: Request): Promise<User> {
-    const userRepository = getRepository(User);
-    const user = await userRepository.findOne(user_id);
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('You must login!', 401);
@@ -30,7 +33,7 @@ class UpdateUserAvatarService {
     }
 
     user.avatar = avatarFileName;
-    await userRepository.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }
