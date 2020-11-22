@@ -6,11 +6,12 @@ import AppointmentsRepository from '@modules/appointments/infra/typeorm/reposito
 
 
 const appoitmentsRouter = Router();
-const appointmentsRepository = new AppointmentsRepository();
 
 appoitmentsRouter.use(ensureAuthenticaded);
 
 appoitmentsRouter.post('/', async (request, response) => {
+  const appointmentsRepository = new AppointmentsRepository();
+
   const { provider_id, date } = request.body;
   const parsedDate = parseISO(date);
 
