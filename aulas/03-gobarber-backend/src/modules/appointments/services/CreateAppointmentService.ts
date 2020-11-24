@@ -1,3 +1,4 @@
+import "reflect-metadata"
 import { startOfHour } from 'date-fns';
 import Appointment from '../infra/typeorm/entities/Appointments';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepositories';
