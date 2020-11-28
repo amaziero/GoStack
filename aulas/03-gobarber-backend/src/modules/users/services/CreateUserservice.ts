@@ -1,8 +1,8 @@
 import User from '@modules/users/infra/typeorm/entities/Users';
-import { hash } from 'bcryptjs';
 import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import IUserRepossitories from '../repositories/IUsersRepositories';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface RequestUser {
   name: string;
@@ -14,7 +14,10 @@ interface RequestUser {
 class CreateUserService {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUserRepossitories
+    private usersRepository: IUserRepossitories,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) { }
 
   public async execute({ name, email, password }: RequestUser): Promise<User> {
@@ -32,7 +35,7 @@ class CreateUserService {
       throw new AppError('You must pass the password', 401);
     }
 
-    const hashedPassword = await hash(password, 8);
+    const hashedPassword = await this.hashProvider.generateHash(password);
 
     const user = await this.usersRepository.create({
       name,
