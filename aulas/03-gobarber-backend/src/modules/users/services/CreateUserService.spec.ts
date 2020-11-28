@@ -1,11 +1,17 @@
 import AppError from '@shared/errors/AppError';
 import FakeUsersRepositories from '../repositories/fakes/FakeUsersRepositories'
 import CreateUserServices from './CreateUserservice';
+import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider'
+
 
 describe('CreateUser', () => {
   it('Should be able to create a new user', async () => {
     const fakeUsersRepository = new FakeUsersRepositories();
-    const createUser = new CreateUserServices(fakeUsersRepository);
+    const fakeHashProvider = new FakeHashProvider();
+    const createUser = new CreateUserServices(
+      fakeUsersRepository,
+      fakeHashProvider
+    );
 
     const user = await createUser.execute({
       name: 'John Doe',
@@ -18,7 +24,11 @@ describe('CreateUser', () => {
 
   it('Should not be able to create a new user, missing email', async () => {
     const fakeUsersRepository = new FakeUsersRepositories();
-    const createUser = new CreateUserServices(fakeUsersRepository);
+    const fakeHashProvider = new FakeHashProvider();
+    const createUser = new CreateUserServices(
+      fakeUsersRepository,
+      fakeHashProvider
+    );
 
     expect(
       createUser.execute({
@@ -30,8 +40,12 @@ describe('CreateUser', () => {
   });
 
   it('Should not be able to create a new user, missing password', async () => {
+    const fakeHashProvider = new FakeHashProvider();
     const fakeUsersRepository = new FakeUsersRepositories();
-    const createUser = new CreateUserServices(fakeUsersRepository);
+    const createUser = new CreateUserServices(
+      fakeUsersRepository,
+      fakeHashProvider
+    );
 
     expect(
       createUser.execute({
@@ -42,8 +56,12 @@ describe('CreateUser', () => {
   });
 
   it('Should not be able to create a new user, email alreary used', async () => {
+    const fakeHashProvider = new FakeHashProvider();
     const fakeUsersRepository = new FakeUsersRepositories();
-    const createUser = new CreateUserServices(fakeUsersRepository);
+    const createUser = new CreateUserServices(
+      fakeUsersRepository,
+      fakeHashProvider
+    );
 
     await createUser.execute({
       name: 'John Doe',
