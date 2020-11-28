@@ -15,9 +15,13 @@ class CreateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUserRepossitories
-  ) {}
+  ) { }
 
   public async execute({ name, email, password }: RequestUser): Promise<User> {
+    if (email === '') {
+      throw new AppError('Email must not be blank space');
+    }
+
     const checkUserExists = await this.usersRepository.findByEmail(email);
 
     if (checkUserExists) {
