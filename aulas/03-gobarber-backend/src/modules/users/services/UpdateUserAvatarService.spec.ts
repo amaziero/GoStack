@@ -49,6 +49,8 @@ describe('UpdateUserAvatar', () => {
     const fakeUserRepository = new FakeUsersRepository();
     const fakeStorageProvider = new FakeDiskStorageProvider();
 
+    const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile')
+
     const updateUserAvatar = new UpdateUserAvatarService(
       fakeUserRepository,
       fakeStorageProvider
@@ -70,6 +72,7 @@ describe('UpdateUserAvatar', () => {
       avatarFileName: 'teste-update-user-avatar-new.png'
     })
 
+    expect(deleteFile).toHaveBeenCalledWith('teste-update-user-avatar.png');
     expect(user.avatar).toBe('teste-update-user-avatar-new.png');
   });
 });
