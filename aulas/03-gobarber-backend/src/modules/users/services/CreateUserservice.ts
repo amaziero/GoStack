@@ -22,7 +22,7 @@ class CreateUserService {
 
   public async execute({ name, email, password }: RequestUser): Promise<User> {
     if (email === '') {
-      throw new AppError('Email must not be blank space');
+      throw new AppError('Email must not be a blank space');
     }
 
     const checkUserExists = await this.usersRepository.findByEmail(email);
