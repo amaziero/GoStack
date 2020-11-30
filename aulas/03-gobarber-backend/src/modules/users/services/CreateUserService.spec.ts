@@ -1,14 +1,14 @@
 import AppError from '@shared/errors/AppError';
 import FakeUsersRepositories from '../repositories/fakes/FakeUsersRepositories'
-import CreateUserServices from './CreateUserservice';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider'
+import CreateUserService from './CreateUserService';
 
 
 describe('CreateUser', () => {
   it('Should be able to create a new user', async () => {
     const fakeUsersRepository = new FakeUsersRepositories();
     const fakeHashProvider = new FakeHashProvider();
-    const createUser = new CreateUserServices(
+    const createUser = new CreateUserService(
       fakeUsersRepository,
       fakeHashProvider
     );
@@ -25,7 +25,7 @@ describe('CreateUser', () => {
   it('Should not be able to create a new user, missing email', async () => {
     const fakeUsersRepository = new FakeUsersRepositories();
     const fakeHashProvider = new FakeHashProvider();
-    const createUser = new CreateUserServices(
+    const createUser = new CreateUserService(
       fakeUsersRepository,
       fakeHashProvider
     );
@@ -42,7 +42,7 @@ describe('CreateUser', () => {
   it('Should not be able to create a new user, missing password', async () => {
     const fakeHashProvider = new FakeHashProvider();
     const fakeUsersRepository = new FakeUsersRepositories();
-    const createUser = new CreateUserServices(
+    const createUser = new CreateUserService(
       fakeUsersRepository,
       fakeHashProvider
     );
@@ -58,7 +58,7 @@ describe('CreateUser', () => {
   it('Should not be able to create a new user, email alreary used', async () => {
     const fakeHashProvider = new FakeHashProvider();
     const fakeUsersRepository = new FakeUsersRepositories();
-    const createUser = new CreateUserServices(
+    const createUser = new CreateUserService(
       fakeUsersRepository,
       fakeHashProvider
     );
