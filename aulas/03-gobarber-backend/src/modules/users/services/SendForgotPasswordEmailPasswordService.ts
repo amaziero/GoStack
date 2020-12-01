@@ -2,6 +2,7 @@ import IMailProvider from '@shared/container/providers/MailProvider/models/IMail
 import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import IUserRepossitories from '../repositories/IUsersRepositories';
+import IUserTokenRepossitories from '../repositories/IUserTokenRepositories';
 
 interface RequestUser {
   email: string;
@@ -15,14 +16,19 @@ class SendForgotPasswordEmailService {
 
     @inject('MailProvider')
     private mailProvider: IMailProvider,
+
+    @inject('UserTokenrepository')
+    private userTokenRepository: IUserTokenRepossitories,
   ) { }
 
   public async execute({ email }: RequestUser): Promise<void> {
-    const checkIfUserExists = await this.usersRepository.findByEmail(email);
+    const user = await this.usersRepository.findByEmail(email);
 
-    if (!checkIfUserExists) {
+    if (!user) {
       throw new AppError(`Couldn't find the email provided`)
     }
+
+    await this.userTokenRepository.generate(user.id);
 
     this.mailProvider.sendMail(email, 'Pedido de recuperação de email recebido')
   }
