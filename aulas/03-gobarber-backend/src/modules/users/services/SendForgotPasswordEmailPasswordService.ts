@@ -4,7 +4,7 @@ import { inject, injectable } from 'tsyringe';
 import IUserRepossitories from '../repositories/IUsersRepositories';
 import IUserTokenRepossitories from '../repositories/IUserTokenRepositories';
 
-interface RequestUser {
+interface IRequestUser {
   email: string;
 }
 
@@ -21,7 +21,7 @@ class SendForgotPasswordEmailService {
     private userTokenRepository: IUserTokenRepossitories,
   ) { }
 
-  public async execute({ email }: RequestUser): Promise<void> {
+  public async execute({ email }: IRequestUser): Promise<void> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
