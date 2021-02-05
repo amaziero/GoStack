@@ -2,7 +2,7 @@ import AuthenticateUserService from '@modules/users/services/AuthenticateUserSer
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-export default class SessionControllers{
+export default class SessionControllers {
   public async create(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
     const authenticateUser = container.resolve(AuthenticateUserService);
