@@ -2,6 +2,7 @@ import FakeUsersRepositories from '../repositories/fakes/FakeUsersRepositories'
 import FakeUsersTokenRepositories from '../repositories/fakes/FakeUsersTokenRepositories'
 import ResetPassowrdService from './ResetPasswordService';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import AppError from '@shared/errors/AppError';
 
 let fakeUsersRepository: FakeUsersRepositories;
 let fakeUserTokenRespository: FakeUsersTokenRepositories;
@@ -43,4 +44,11 @@ describe('ResetPassowrd', () => {
     expect(generateHash).toHaveBeenCalledWith('123123')
     expect(updatedUser?.password).toBe('123123');
   });
+
+  it(`Should not be able to reset password with non-existing token`, async () => {
+    await expect(resetPassowrd.execute({
+      token: 'non-existing-token',
+      password: '123456',
+    })).rejects.toBeInstanceOf(AppError)
+  })
 });
