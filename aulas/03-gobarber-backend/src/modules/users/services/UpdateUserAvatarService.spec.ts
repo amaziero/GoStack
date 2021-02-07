@@ -3,17 +3,21 @@ import FakeDiskStorageProvider from '@shared/container/providers/StoreProviders/
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepositories'
 import UpdateUserAvatarService from './UpdateUserAvatar';
 
+let fakeUserRepository: FakeUsersRepository;
+let fakeStorageProvider: FakeDiskStorageProvider;
+let updateUserAvatar: UpdateUserAvatarService;
+
 
 describe('UpdateUserAvatar', () => {
-  it(`Should be able to upload user's avatar`, async () => {
-    const fakeUserRepository = new FakeUsersRepository();
-    const fakeStorageProvider = new FakeDiskStorageProvider();
-
-    const updateUserAvatar = new UpdateUserAvatarService(
+  beforeEach(() => {
+    fakeUserRepository = new FakeUsersRepository();
+    fakeStorageProvider = new FakeDiskStorageProvider();
+    updateUserAvatar = new UpdateUserAvatarService(
       fakeUserRepository,
       fakeStorageProvider
     )
-
+  })
+  it(`Should be able to upload user's avatar`, async () => {
     const user = await fakeUserRepository.create({
       name: 'John Doe',
       email: 'jowhdoe@gmail.com',
@@ -29,14 +33,6 @@ describe('UpdateUserAvatar', () => {
   });
 
   it(`Should not be able to upload user's avatar - non existent user`, async () => {
-    const fakeUserRepository = new FakeUsersRepository();
-    const fakeStorageProvider = new FakeDiskStorageProvider();
-
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUserRepository,
-      fakeStorageProvider
-    )
-
     expect(
       updateUserAvatar.execute({
         user_id: 'non existen user',
@@ -46,15 +42,7 @@ describe('UpdateUserAvatar', () => {
   });
 
   it(`Should delete old avatar when new avatar before new avatar is saved`, async () => {
-    const fakeUserRepository = new FakeUsersRepository();
-    const fakeStorageProvider = new FakeDiskStorageProvider();
-
     const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile')
-
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUserRepository,
-      fakeStorageProvider
-    )
 
     const user = await fakeUserRepository.create({
       name: 'John Doe',

@@ -3,15 +3,22 @@ import FakeUsersRepositories from '../repositories/fakes/FakeUsersRepositories'
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider'
 import CreateUserService from './CreateUserService';
 
+let fakeUsersRepository: FakeUsersRepositories;
+let fakeHashProvider: FakeHashProvider;
+let createUser: CreateUserService;
+
 describe('CreateUser', () => {
-  it('Should be able to create a new user', async () => {
-    const fakeUsersRepository = new FakeUsersRepositories();
-    const fakeHashProvider = new FakeHashProvider();
-    const createUser = new CreateUserService(
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepositories();
+    fakeHashProvider = new FakeHashProvider();
+
+    createUser = new CreateUserService(
       fakeUsersRepository,
       fakeHashProvider
     );
+  })
 
+  it('Should be able to create a new user', async () => {
     const user = await createUser.execute({
       name: 'John Doe',
       email: 'jowhdoe@gmail.com',
@@ -22,13 +29,6 @@ describe('CreateUser', () => {
   });
 
   it('Should not be able to create a new user, missing email', async () => {
-    const fakeUsersRepository = new FakeUsersRepositories();
-    const fakeHashProvider = new FakeHashProvider();
-    const createUser = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider
-    );
-
     await expect(
       createUser.execute({
         name: 'John Doe',
@@ -39,13 +39,6 @@ describe('CreateUser', () => {
   });
 
   it('Should not be able to create a new user, missing password', async () => {
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeUsersRepository = new FakeUsersRepositories();
-    const createUser = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider
-    );
-
     await expect(
       createUser.execute({
         name: 'John Doe',
@@ -55,13 +48,6 @@ describe('CreateUser', () => {
   });
 
   it('Should not be able to create a new user, email alreary used', async () => {
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeUsersRepository = new FakeUsersRepositories();
-    const createUser = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider
-    );
-
     await createUser.execute({
       name: 'John Doe',
       email: 'jowhdoe@gmail.com',
