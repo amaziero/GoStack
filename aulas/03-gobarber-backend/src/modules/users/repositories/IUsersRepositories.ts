@@ -1,8 +1,9 @@
 import User from '../infra/typeorm/entities/Users';
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
+import IFindAllProvidersDTO from '../dtos/IFindAllProvidersDTO';
 
 export default interface IUserRepossitories {
-  findAllProviders(except_user_id?: string): Promise<User[]>
+  findAllProviders({ except_user_id }: IFindAllProvidersDTO): Promise<User[]>
   findById(id: string): Promise<User | undefined>;
   findByEmail(email: string): Promise<User | undefined>;
   create(data: ICreateUserDTO): Promise<User>;
