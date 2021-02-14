@@ -47,8 +47,6 @@ class ListProviderMonthAvaliabilityService {
       }
     })
 
-    console.log(month, year, avaliability)
-
     return avaliability
   }
 }
