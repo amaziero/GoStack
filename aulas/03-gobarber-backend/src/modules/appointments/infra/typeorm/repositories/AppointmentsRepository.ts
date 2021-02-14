@@ -2,7 +2,6 @@
 // interact with the object itself on the data base, all thigs like:
 // create, list, delete and change an Appointment, will have most of it's logic
 // here.
-import "reflect-metadata"
 import Appointment from '../entities/Appointments';
 import { getRepository, Repository, Raw } from 'typeorm';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
