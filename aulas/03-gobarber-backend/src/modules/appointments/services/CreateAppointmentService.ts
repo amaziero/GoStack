@@ -15,6 +15,11 @@ class CreateAppointmentService {
 
   public async execute({ provider_id, user_id, date }: ICreateAppointmtentDTO): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
+    const appointmetHour = appointmentDate.getHours()
+
+    if (appointmetHour < 8 || appointmetHour > 18) {
+      throw new AppError(`Appointemntes can be created only at 8 am to 6 pm`)
+    }
 
     if (isBefore(appointmentDate, Date.now())) {
       throw new AppError(`You can't create and appointment in a passed date`)
