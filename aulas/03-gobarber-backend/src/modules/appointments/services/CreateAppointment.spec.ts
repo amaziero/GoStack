@@ -17,33 +17,33 @@ describe('CreateAppointment', () => {
     })
 
     const appointment = await createAppointment.execute({
-      user_id: '6546549879871314679',
+      user_id: 'user_id',
       date: new Date(2020, 4, 10, 13),
-      provider_id: '6546549879871314679'
+      provider_id: 'provider_id'
     })
 
     expect(appointment).toHaveProperty('id');
-    expect(appointment.provider_id).toBe('6546549879871314679');
+    expect(appointment.provider_id).toBe('provider_id');
   });
 
-  it('Should not able to create two appimtments at the same time', async () => {
+  it('Should not able to create two appointments at the same time', async () => {
     jest.spyOn(Date, 'now').mockImplementationOnce(() => {
       return new Date(2020, 4, 10, 12).getTime()
     })
 
-    const appointmentDate = new Date(2020, 4, 10, 12)
+    const appointmentDate = new Date(2020, 4, 10, 14)
 
     await createAppointment.execute({
-      user_id: '6546549879871314679',
+      user_id: 'user_id',
       date: appointmentDate,
-      provider_id: '6546549879871314679'
+      provider_id: 'provider_id'
     });
 
-    expect(
+    await expect(
       createAppointment.execute({
-        user_id: '6546549879871314679',
+        user_id: 'user_id',
         date: appointmentDate,
-        provider_id: '6546549879871314679'
+        provider_id: 'provider_id'
       })
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -53,10 +53,22 @@ describe('CreateAppointment', () => {
       return new Date(2020, 4, 10, 12).getTime()
     })
 
-    expect(createAppointment.execute({
+    await expect(createAppointment.execute({
       date: new Date(2020, 4, 10, 10),
       provider_id: 'user',
       user_id: 'provider_id'
+    })).rejects.toBeInstanceOf(AppError)
+  })
+
+  it('Should not be able to create an appointment with itself', async () => {
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2020, 4, 10, 12).getTime()
+    })
+
+    await expect(createAppointment.execute({
+      date: new Date(2020, 4, 10, 13),
+      provider_id: 'user',
+      user_id: 'user'
     })).rejects.toBeInstanceOf(AppError)
   })
 });
