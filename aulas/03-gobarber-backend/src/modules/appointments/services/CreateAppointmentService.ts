@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { startOfHour } from 'date-fns';
+import { startOfHour, isBefore } from 'date-fns';
 import Appointment from '../infra/typeorm/entities/Appointments';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepositories';
 import AppError from '@shared/errors/AppError';
@@ -15,6 +15,11 @@ class CreateAppointmentService {
 
   public async execute({ provider_id, user_id, date }: ICreateAppointmtentDTO): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
+
+    if (isBefore(appointmentDate, Date.now())) {
+      throw new AppError(`You can't create and appointment in a passed date`)
+    }
+
     const findAppointInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate
     );
