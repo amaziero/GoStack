@@ -1,10 +1,13 @@
 import 'reflect-metadata';
+
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import 'express-async-errors';
-import routes from './routes/index';
+
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
-import cors from 'cors';
+import routes from './routes/index';
+
 import '@shared/infra/typeorm';
 import '@shared/container'
 
@@ -12,8 +15,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(routes);
 app.use('/files', express.static(uploadConfig.uploadsFonder));
+app.use(routes);
 
 // Middleware para tratamento de erros globais
 app.use(
