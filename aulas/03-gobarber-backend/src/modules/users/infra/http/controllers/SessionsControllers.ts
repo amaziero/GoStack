@@ -1,6 +1,7 @@
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer'
 
 export default class SessionControllers {
   constructor() { }
@@ -14,6 +15,6 @@ export default class SessionControllers {
       password,
     });
 
-    return response.status(200).json({ user, token });
+    return response.status(200).json({ user: classToClass(user), token });
   };
 }
