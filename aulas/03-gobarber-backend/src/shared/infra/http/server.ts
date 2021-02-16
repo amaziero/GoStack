@@ -7,6 +7,7 @@ import 'express-async-errors';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 import routes from './routes/index';
+import { errors } from 'celebrate'
 
 import '@shared/infra/typeorm';
 import '@shared/container'
@@ -17,6 +18,8 @@ app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.uploadsFonder));
 app.use(routes);
+
+app.use(errors())
 
 // Middleware para tratamento de erros globais
 app.use(
