@@ -1,5 +1,6 @@
 import UpdateProfileService from '@modules/users/services/UpdtadeProviderService';
 import ShowProfileService from '@modules/users/services/ShowProfileService';
+import { classToClass } from 'class-transformer'
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -10,7 +11,7 @@ export default class ProfileController {
 
     const user = await showProfileService.execute({ user_id })
 
-    return response.status(200).json(user);
+    return response.status(200).json(classToClass(user));
   }
 
 
@@ -28,6 +29,6 @@ export default class ProfileController {
       password
     });
 
-    return response.status(200).json(user);
+    return response.status(200).json(classToClass(user));
   };
 }
