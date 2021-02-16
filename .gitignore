@@ -4,3 +4,4 @@ tmp/.gitkeep
 temp/
 coverage
 .env
+.ormconfig.json
