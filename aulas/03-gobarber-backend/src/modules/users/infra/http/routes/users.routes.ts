@@ -9,7 +9,8 @@ import { celebrate, Segments, Joi } from 'celebrate'
 const usersRouter = Router();
 const usersController = new UsersControllers();
 const userAvatarController = new UserAvatarController();
-const upload = multer(uploadConfig);
+
+const upload = multer(uploadConfig.multer);
 
 usersRouter.post('/',
   celebrate({
