@@ -1,4 +1,5 @@
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import { classToClass } from 'class-transformer';
 import "reflect-metadata"
 import { inject, injectable } from 'tsyringe';
 import Appointments from '../infra/typeorm/entities/Appointments';
@@ -35,7 +36,7 @@ class ListProviderAppointmentsService {
         year
       })
 
-      await this.cacheProvider.save(cachedKey, appointments)
+      await this.cacheProvider.save(cachedKey, classToClass(appointments))
     }
 
     return appointments
