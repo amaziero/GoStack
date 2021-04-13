@@ -3,11 +3,13 @@ import { Container } from './styles';
 
 // Tipagem quando não há sobrescreção de tipos já build in
 // se declara um type para a variável
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  loading?: boolean;
+};
 
-const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
+const Button: React.FC<ButtonProps> = ({ children, loading, ...rest }) => (
   <Container type="button" {...rest}>
-    {children}
+    {loading ? 'Caregando...' : children}
   </Container>
 );
 

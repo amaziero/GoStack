@@ -5,7 +5,6 @@ import {
   FiInfo,
   FiXCircle,
 } from 'react-icons/fi';
-import { AnimatedValue } from 'react-spring';
 import { CSSProperties } from 'styled-components';
 import useToast, { ToastMessages } from '../../../hooks/toast';
 import { Container } from './styles';
@@ -37,7 +36,7 @@ const Toast: React.FC<ToastProps> = ({ message, styles }) => {
   return (
     <Container
       type={message.type}
-      hasDescription={!!message.description}
+      hasDescription={Number(!!message.description)}
       style={styles}
     >
       {icons[message.type] || 'info'}

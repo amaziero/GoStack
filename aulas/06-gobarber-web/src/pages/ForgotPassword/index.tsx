@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { FiLogOut, FiMail } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
@@ -17,6 +17,7 @@ interface ForgotPasswordProps {
 }
 
 const ForgotPassword: React.FC = () => {
+  const [loading, setloading] = useState(false);
   const formRef = useRef<FormHandles>(null);
 
   const { addToast } = useToast();
@@ -24,6 +25,8 @@ const ForgotPassword: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: ForgotPasswordProps) => {
       try {
+        setloading(true);
+
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -55,13 +58,14 @@ const ForgotPassword: React.FC = () => {
 
           return;
         }
-
         addToast({
           type: 'error',
           title: 'Erro na recuperação de senha',
           description:
             'Ocorreu um erro na recuperação de senha, tente novamente',
         });
+      } finally {
+        setloading(false);
       }
     },
     [addToast],
@@ -78,7 +82,9 @@ const ForgotPassword: React.FC = () => {
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-            <Button type="submit">Recuperar Senha</Button>
+            <Button loading={loading} type="submit">
+              Recuperar Senha
+            </Button>
 
             {/* <a href="teste">Esqueci minha senha</a> */}
           </Form>
