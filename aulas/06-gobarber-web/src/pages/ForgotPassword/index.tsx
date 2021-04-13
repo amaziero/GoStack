@@ -10,6 +10,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErros';
 import useToast from '../../hooks/toast';
+import api from '../../services/api';
 
 interface ForgotPasswordProps {
   email: string;
@@ -37,7 +38,16 @@ const ForgotPassword: React.FC = () => {
 
         // recupecação de senha
 
-        // history.push('/dashboard');
+        await api.post('password/forgot', {
+          email: data.email,
+        });
+
+        addToast({
+          type: 'success',
+          title: 'E-mail de recuperação enviado',
+          description:
+            'Enviamos um e-mail para confirmar a recuperação de senha, chegue a sua caixa de entrada',
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
