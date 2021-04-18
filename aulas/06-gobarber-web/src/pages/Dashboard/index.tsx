@@ -8,6 +8,7 @@ import {
   Content,
   Schedule,
   NextAppintment,
+  Section,
   Calendar,
 } from './styles';
 import logoImg from '../../assets/logo.svg';
@@ -63,6 +64,14 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </NextAppintment>
+
+          <Section>
+            <strong>Manhã</strong>
+          </Section>
+
+          <Section>
+            <strong>Tarde</strong>
+          </Section>
         </Schedule>
 
         <Calendar />
