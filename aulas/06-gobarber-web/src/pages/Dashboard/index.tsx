@@ -58,7 +58,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     api
-      .get(`/providers/${user.id}/month-avaliability`, {
+      .get(`/providers/${user.id}/month-availability`, {
         params: {
           year: currenteMonth.getFullYear(),
           month: currenteMonth.getMonth() + 1,
