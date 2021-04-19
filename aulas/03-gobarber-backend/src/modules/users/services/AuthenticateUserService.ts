@@ -46,7 +46,7 @@ class AuthenticateUserService {
 
     const token = sign({}, secret, {
       subject: user.id,
-      expiresIn: expiresIn, // refresh token
+      expiresIn, // refresh token
     });
 
     return {
