@@ -1,4 +1,3 @@
-// This class is responsable for represent the Appointment content within it
 import {
   Entity,
   Column,
@@ -8,21 +7,22 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+
 import User from '@modules/users/infra/typeorm/entities/Users';
 
 @Entity('appointments')
-class Appointments {
+class Appointment {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('varchar')
+  @Column()
   provider_id: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'provider_id' })
   provider: User;
 
-  @Column('varchar')
+  @Column()
   user_id: string;
 
   @ManyToOne(() => User)
@@ -39,4 +39,4 @@ class Appointments {
   updated_at: Date;
 }
 
-export default Appointments;
+export default Appointment;

@@ -13,7 +13,7 @@ appoitmentsRouter.use(ensureAuthenticaded);
 appoitmentsRouter.post('/', celebrate({
   [Segments.BODY]: {
     provider_id: Joi.string().uuid().required(),
-    date: Joi.date().required()
+    date: Joi.date()
   }
 }), appointmentController.create);
 
