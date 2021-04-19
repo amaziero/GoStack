@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
 import { Request, Response } from 'express';
-import ListProviderService from '@modules/appointments/services/LIstProviderServices';
+import ListProviderService from '@modules/appointments/services/ListProviderServices';
 
 export default class ProvidersController {
   public async index(request: Request, response: Response) {

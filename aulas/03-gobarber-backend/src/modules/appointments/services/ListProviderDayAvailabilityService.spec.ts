@@ -1,4 +1,4 @@
-import ListProviderDayAvaliabilityService from './ListProviderDayAvaliabilityService';
+import ListProviderDayAvaliabilityService from './ListProviderDayAvailabilityService';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentRespository'
 
 let listProviderDayAvaliabibility: ListProviderDayAvaliabilityService;

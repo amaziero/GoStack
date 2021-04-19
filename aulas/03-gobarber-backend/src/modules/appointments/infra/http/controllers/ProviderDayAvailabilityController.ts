@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
 import { Request, Response } from 'express';
-import ListProviderDayAvaliabilityService from '@modules/appointments/services/ListProviderDayAvaliabilityService';
+import ListProviderDayAvaliabilityService from '@modules/appointments/services/ListProviderDayAvailabilityService';
 
 export default class ProvidersDayAvaliabilityController {
   public async index(request: Request, response: Response) {
