@@ -1,4 +1,6 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react';
+import { isToday, format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import { FiClock, FiPower } from 'react-icons/fi';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -23,11 +25,21 @@ interface MonthAvaliabilityItem {
   avaliable: boolean;
 }
 
+interface Appointment {
+  id: string;
+  date: string;
+  user: {
+    name: string;
+    avatar_url: string;
+  };
+}
+
 const Dashboard: React.FC = () => {
   const { signOut, user } = useAuth();
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currenteMonth, setCurrentMonth] = useState(new Date());
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   const [monthAvaliability, setMonthAvaliability] = useState<
     MonthAvaliabilityItem[]
@@ -69,6 +81,31 @@ const Dashboard: React.FC = () => {
       });
   }, [currenteMonth, user.id]);
 
+  useEffect(() => {
+    api
+      .get('/appointments/me', {
+        params: {
+          year: selectedDate.getFullYear(),
+          month: selectedDate.getMonth() + 1,
+          day: selectedDate.getDate(),
+        },
+      })
+      .then(response => {
+        setAppointments(response.data);
+        console.log(response.data);
+      });
+  }, [selectedDate]);
+
+  const selectedDateAsText = useMemo(() => {
+    return format(selectedDate, "'Dia' dd 'de' MMMM", {
+      locale: ptBR,
+    });
+  }, [selectedDate]);
+
+  const selectedWeekDay = useMemo(() => {
+    return format(selectedDate, 'cccc', { locale: ptBR });
+  }, [selectedDate]);
+
   return (
     <Container>
       <Header>
@@ -95,9 +132,9 @@ const Dashboard: React.FC = () => {
           <h1>Horários Agendados</h1>
 
           <p>
-            <span>Hoje</span>
-            <span>Dia 6</span>
-            <span>Segunda-Feira</span>
+            {isToday(selectedDate) && <span>Hoje</span>}
+            <span>{selectedDateAsText}</span>
+            <span>{selectedWeekDay}</span>
           </p>
 
           <NextAppintment>
