@@ -1,5 +1,4 @@
-import CreateUserService from '@modules/users/services/CreateUserservice';
-import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatar';
+import CreateUserService from '@modules/users/services/CreateUserService';
 import { classToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
